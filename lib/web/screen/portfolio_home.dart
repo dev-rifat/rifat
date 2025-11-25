@@ -43,6 +43,7 @@ class PortfolioHome extends StatelessWidget {
               SkillsSection(),
               WorkExperienceSection(),
              ProjectsSection(),
+              ContactSection(),
             ],
           ),
         ),
