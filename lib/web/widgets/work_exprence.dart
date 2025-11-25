@@ -8,27 +8,24 @@ class WorkExperienceSection extends StatelessWidget {
 
   final experiences = const [
     {
-      "title": "JavaScript Developer",
+      "title": "Apps Developer - Futter",
       "company": "Gain Solutions Ltd - Mirpur 12, Dhaka, Bangladesh (Onsite)",
-      "duration": "Jan 2024 - Present",
-      "description":
-      "Built and maintained support software and HRM solutions using JavaScript, React, and Next.js. Improved usability and scalability by implementing modern frontend practices and reusable components.",
+      "duration": "Jan 2023 - Present",
+      "description":"Built and maintained Flutter applications for Android & iOS platforms. Developed HRM solutions and support software using Flutter framework. Implemented GetX for state management and Hive for local storage."
     },
     {
-      "title": "Software Engineer – Frontend",
+      "title": "Apps Developer - Futter",
       "company":
-      "Hovata Technologies - Purana Paltan Lane, Dhaka-1000 (Onsite)",
+      "Data App LLC - USA (Remote)",
       "duration": "Oct 2022 - Dec 2023",
-      "description":
-      "Developed and optimized business CRM and ERP applications with a focus on responsive design and smooth user experience. Collaborated with backend teams to deliver feature-rich and reliable applications.",
+      "description":"Developed cross-platform mobile applications using Flutter framework. Built LMS, HRM, and E-commerce applications with responsive UI designs"
     },
     {
-      "title": "MERN Stack Developer",
+      "title": "Apps Developer - Futter",
       "company":
-      "Across the Global (ATG) - Bangalore Urban, Karnataka, India (Remote)",
-      "duration": "Dec 2021 - Sep 2022",
-      "description":
-      "Designed and delivered multiple web projects including school management systems, e-commerce platforms, and CMS systems using the MERN stack. Ensured application stability and performance through clean code and optimized APIs.",
+      "GigaSoft LTD.- Mirpur 2, Dhaka, Bangladesh (Onsite)",
+      "duration": "Jun 2022 - OCT 2022",
+      "description":"Started professional Flutter development career. Worked on various mobile projects learning best practices and architecture patterns."
     },
   ];
 
@@ -92,7 +89,7 @@ class WorkExperienceSection extends StatelessWidget {
                 ),
                 Container(
                   width: 2,
-                  height: isTablet ? 140 : 180,
+                  height: isTablet ? 140 : 145,
                   color: Colors.grey.shade700,
                 ),
               ],
@@ -106,7 +103,7 @@ class WorkExperienceSection extends StatelessWidget {
               padding: EdgeInsets.all(isMobile ? 18 : 24),
               decoration: BoxDecoration(
                 color: const Color(0xff0e1628),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: Colors.white10),
               ),
               child: Column(
@@ -190,14 +187,14 @@ class WorkExperienceSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.grey.shade800,
-        borderRadius: BorderRadius.circular(20),
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         duration,
         style: GoogleFonts.poppins(
           fontSize: 13,
-          color: Colors.white70,
+          color: const Color(0xff0e1628),
         ),
       ),
     );

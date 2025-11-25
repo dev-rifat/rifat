@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../global/widgets.dart';
 
 class ProjectsSection extends StatelessWidget {
@@ -14,299 +7,289 @@ class ProjectsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final projects = [
-      ProjectModel(
-        title: "Payrun",
-        description:
-        "Payrun is a web-based human resource management system that simplifies HR management with advanced analytics.",
-        imageUrl:
-        "https://cdn.dribbble.com/userupload/11302619/file/original-2ecd4d83189d8c3ac7c8a481cb15c8b9.jpg?resize=752x&vertical=center",
-        detailsUrl: "https://example.com",
-        codeUrl: "https://github.com/",
-        tags: ["Next", "Graphql", "Node", "Express", "AWS", "S3", "ECS"],
-      ),
-      ProjectModel(
-        title: "EasyDesk",
-        description:
-        "EasyDesk is a complete online customer support solution with automation and ticket management.",
-        imageUrl:
-        "https://cdn.dribbble.com/userupload/11302619/file/original-2ecd4d83189d8c3ac7c8a481cb15c8b9.jpg?resize=752x&vertical=center",
-        detailsUrl: "https://example.com",
-        codeUrl: "https://github.com/",
-        tags: ["NextJS", "Node", "Express", "Postgres", "AWS", "S3"],
-      ),
-      ProjectModel(
-        title: "Dimetra",
-        description:
-        "A platform for medical equipment order and delivery with real-time tracking and scheduling.",
-        imageUrl:
-        "https://cdn.dribbble.com/userupload/11302619/file/original-2ecd4d83189d8c3ac7c8a481cb15c8b9.jpg?resize=752x&vertical=center",
-        detailsUrl: "https://example.com",
-        codeUrl: "https://github.com/",
-        tags: ["React", "GraphQL", "Node", "Express", "AWS", "S3"],
-      ),
-    ];
-
-    final screenWidth = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
 
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.symmetric(
-        vertical: 60,
-        horizontal: screenWidth < 700 ? 16 : 40,
+        vertical: 70,
+        horizontal: width < 500 ? 16 : width < 900 ? 30 : 60,
+      ),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF0F172A), Color(0xFF1E293B)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _sectionHeader(screenWidth),
-          const SizedBox(height: 40),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              int crossAxisCount = 1;
-              if (constraints.maxWidth > 1400) crossAxisCount = 4;
-              else if (constraints.maxWidth > 1100) crossAxisCount = 3;
-              else if (constraints.maxWidth > 750) crossAxisCount = 2;
-
-              if (crossAxisCount == 1) {
-                // Use Column for single column layout on mobile
-                return Column(
-                  children: projects
-                      .map((p) => Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: ProjectCard(model: p),
-                  ))
-                      .toList(),
-                );
-              }
-
-              return GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: projects.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: crossAxisCount,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
-                  childAspectRatio: _getChildAspectRatio(constraints.maxWidth),
-                ),
-                itemBuilder: (context, index) {
-                  return ProjectCard(model: projects[index]);
-                },
-              );
-            },
-          ),
+          _buildHeader(width),
+          const SizedBox(height: 50),
+          _buildProjectLayout(width),
         ],
       ),
     );
   }
 
-  double _getChildAspectRatio(double width) {
-    if (width > 1400) return 0.75;
-    if (width > 1100) return 0.78;
-    if (width > 750) return 0.85;
-    return 0.95;
-  }
-
-  Widget _sectionHeader(double width) {
+  // ------------------------------
+  // HEADER
+  // ------------------------------
+  Widget _buildHeader(double width) {
     return Column(
       children: [
-
-        CustomButton(
-          text: 'Projects',
-          onPressed: () {},
-        ),
-        const SizedBox(height: 12),
+        CustomButton(text: 'Projects', onPressed: () {}),
+        const SizedBox(height: 18),
         Text(
-          "My Works",
+          "My Projects",
           style: GoogleFonts.poppins(
+            fontSize: width < 500 ? 28 : width < 900 ? 38 : 48,
             color: Colors.white,
-            fontSize: width < 700 ? 26 : 32,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
           ),
         ),
         const SizedBox(height: 10),
         Text(
-          "Check out some of the projects I've worked on recently.",
+          "Check out some of my professional and personal projects.",
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(
             color: Colors.white70,
-            fontSize: width < 700 ? 14 : 16,
+            fontSize: width < 500 ? 14 : width < 900 ? 16 : 18,
           ),
         ),
       ],
     );
   }
-}
 
-class ProjectModel {
-  final String title;
-  final String description;
-  final String imageUrl;
-  final String detailsUrl;
-  final String codeUrl;
-  final List<String> tags;
-
-  ProjectModel({
-    required this.title,
-    required this.description,
-    required this.imageUrl,
-    required this.detailsUrl,
-    required this.codeUrl,
-    required this.tags,
-  });
-}
-
-class ProjectCard extends StatelessWidget {
-  final ProjectModel model;
-  const ProjectCard({super.key, required this.model});
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final cardWidth = constraints.maxWidth;
-        final padding = cardWidth * 0.04;
-
-        return Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF0E1621),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: Colors.white12),
+  // ------------------------------
+  // RESPONSIVE LAYOUT ENGINE
+  // ------------------------------
+  Widget _buildProjectLayout(double width) {
+    // Mobile (≤700px)
+    if (width < 700) {
+      return Column(
+        children: List.generate(
+          projects.length,
+              (index) => Padding(
+            padding: const EdgeInsets.only(bottom: 25),
+            child: ProjectCard(project: projects[index], width: width),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // IMAGE
-              ClipRRect(
-                borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(14)),
-                child: AspectRatio(
-                  aspectRatio: cardWidth < 350 ? 1.3 : 15 / 9,
-                  child: Image.network(
-                    model.imageUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: Colors.grey[800],
-                        child: const Icon(Icons.image, color: Colors.grey, size: 40),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              // CONTENT
-              Padding(
-                padding: EdgeInsets.all(padding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      model.title,
-                      style: GoogleFonts.poppins(
-                        fontSize: (cardWidth * 0.08).clamp(14, 20),
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: padding / 2),
-                    Text(
-                      model.description,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white70,
-                        fontSize: (cardWidth * 0.05).clamp(12, 14),
-                      ),
-                      maxLines: 5,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: padding / 2),
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: model.tags
-                          .map((tag) => Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: padding / 2,
-                            vertical: padding / 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1E2A3A),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Text(
-                          tag,
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: (cardWidth * 0.035).clamp(10, 12),
-                          ),
-                        ),
-                      ))
-                          .toList(),
-                    ),
-                    SizedBox(height: padding),
-                    // FIXED BUTTONS SECTION - Use Row instead of Wrap with Flexible
-                    Row(
-                      children: [
-                        _codeButton(),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: _detailsButton(),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
+        ),
+      );
+    }
+
+    // Tablet (700–1024)
+    if (width < 1100) {
+      return _buildGrid(2, width);
+    }
+
+    // Small laptop (1100–1500)
+    if (width < 1500) {
+      return _buildGrid(3, width);
+    }
+
+    // Large desktop (1500+)
+    return _buildGrid(4, width);
+  }
+
+  Widget _buildGrid(int columns, double width) {
+    return GridView.builder(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: projects.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: columns,
+        crossAxisSpacing: 25,
+        mainAxisSpacing: 25,
+        childAspectRatio: width < 900 ? 0.75 : 0.90,
+      ),
+      itemBuilder: (context, index) {
+        return ProjectCard(project: projects[index], width: width);
       },
     );
   }
 
-  Widget _codeButton() {
-    return ElevatedButton.icon(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF0E1621),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: const BorderSide(color: Colors.white24),
-        ),
-      ),
-      onPressed: () {},
-      icon: const Icon(Icons.code, color: Colors.white, size: 16),
-      label: Text(
-        "Code",
-        style: GoogleFonts.poppins(
-          color: Colors.white,
-          fontSize: 12,
-        ),
-      ),
-    );
-  }
+  // SAMPLE DATA
+  static final projects = [
+    Project(
+      title: "PayRun HRM",
+      description:
+      "Complete HR & payroll management app with employee tracking, payroll automation and admin interface.",
+      imageUrl: "https://cdn.dribbble.com/userupload/11302619/file/original-2ecd4d83189d8c3ac7c8a481cb15c8b9.jpg?resize=752x",
+      tags: ["Flutter", "GetX", "Firebase", "Hive"],
+    ),
+    Project(
+      title: "EasyDesk AI",
+      description:
+      "AI-powered helpdesk with live chat, smart ticketing and automated workflows.",
+      imageUrl: "https://cdn.dribbble.com/userupload/11302619/file/original-2ecd4d83189d8c3ac7c8a481cb15c8b9.jpg?resize=752x",
+      tags: ["Flutter", "Firebase", "REST API"],
+    ),
+    Project(
+      title: "LMS Mobile",
+      description:
+      "Full-featured LMS for students with offline access, quizzes & video learning.",
+      imageUrl: "https://cdn.dribbble.com/userupload/11302619/file/original-2ecd4d83189d8c3ac7c8a481cb15c8b9.jpg?resize=752x",
+      tags: ["Flutter", "Provider", "SQLite", "API"],
+    ),
+  ];
+}
 
-  Widget _detailsButton() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF1A73E8),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+// ===============================================
+// MODEL
+// ===============================================
+class Project {
+  final String title;
+  final String description;
+  final String imageUrl;
+  final List<String> tags;
+
+  const Project({
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+    required this.tags,
+  });
+}
+
+// ===============================================
+// PROJECT CARD (FULLY RESPONSIVE)
+// ===============================================
+class ProjectCard extends StatelessWidget {
+  final Project project;
+  final double width;
+
+  const ProjectCard({super.key, required this.project, required this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    // dynamic card sizing
+    final isSmall = width < 450;
+    final isMobile = width < 700;
+
+    final cardPadding = isSmall ? 10 : isMobile ? 14 : 18;
+    final titleSize = isSmall ? 14 : isMobile ? 16 : 18;
+    final descSize = isSmall ? 11 : isMobile ? 12 : 14;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF1E293B),
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 20,
+              offset: const Offset(0, 4)),
+        ],
       ),
-      onPressed: () {},
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Details",
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 12,
+          // IMAGE
+          ClipRRect(
+            borderRadius:
+            const BorderRadius.vertical(top: Radius.circular(6)),
+            child: Image.network(
+              project.imageUrl,
+              height: isSmall ? 100 : isMobile ? 140 : 190,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(width: 6),
-          const Icon(Icons.arrow_forward, color: Colors.white, size: 16),
+
+          // CONTENT
+          Padding(
+            padding: EdgeInsets.all(cardPadding.toDouble()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  project.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    fontSize: titleSize.toDouble(),
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // DESCRIPTION (AUTO TRIMS)
+                Text(
+                  project.description,
+                  maxLines: isSmall ? 3 : 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    fontSize: descSize.toDouble(),
+                    color: Colors.white70,
+                    height: 1.4,
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                // TAGS
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
+                  children: project.tags
+                      .map((tag) => Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF334155),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      tag,
+                      style: GoogleFonts.poppins(
+                        fontSize: isSmall ? 9 : 11,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ))
+                      .toList(),
+                ),
+
+                SizedBox(height: 20,),
+
+                OutlinedButton.icon(
+                  onPressed: () {},
+
+                  style: OutlinedButton.styleFrom(
+                    side:  BorderSide(color: Colors.blueAccent,width: 2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    padding:
+                    EdgeInsets.symmetric(vertical: isSmall ? 4 : 8,horizontal: 20),
+                  ),
+                  
+                  
+                  label: Wrap(
+                    children: [
+                      Text(
+                        "Details",
+                        style: GoogleFonts.poppins(
+                          fontSize: isSmall ? 10 : 12,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                      SizedBox(width: 8,),
+                      Icon(Icons.arrow_forward_outlined,color: Colors.blueAccent,)
+                      
+                      
+                    ],
+                  ),
+                ),
+
+                // BUTTONS
+                const SizedBox(height: 50)
+              ],
+            ),
+          ),
         ],
       ),
     );

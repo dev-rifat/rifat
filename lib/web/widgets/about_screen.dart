@@ -17,10 +17,7 @@ class AboutMeSection extends StatelessWidget {
           // Badge
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28.0),
-            child: CustomButton(
-              text: 'About Me',
-              onPressed: () {},
-            ),
+            child: CustomButton(text: 'About Me', onPressed: () {}),
           ),
 
           const SizedBox(height: 40),
@@ -50,9 +47,8 @@ class AboutMeSection extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Text(
-                "I'm a passionate Full Stack Developer with expertise in building modern web applications. "
-                    "With a strong foundation in both frontend and backend technologies, I create seamless digital "
-                    "experiences that solve real-world problems.",
+                "I'm a dedicated Flutter Developer specializing in building fast, beautiful, and scalable cross-platform mobile applications. "
+                "With a strong focus on clean architecture, performance optimization, and pixel-perfect UI, I develop apps that deliver smooth and modern user experiences.",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
                   color: Colors.white70,
@@ -74,26 +70,25 @@ class AboutMeSection extends StatelessWidget {
 
                 return isMobile
                     ? Column(
-                  children: [
-                    _buildFeaturesColumn(),
-                    const SizedBox(height: 80),
-                    _buildJourneyCard(),
-                  ],
-                )
+                        children: [
+                          _buildFeaturesColumn(),
+                          const SizedBox(height: 80),
+                          _buildJourneyCard(),
+                        ],
+                      )
                     : Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(child: _buildFeaturesColumn()),
-                    const SizedBox(width: 100),
-                    Expanded(child: _buildJourneyCard()),
-                  ],
-                );
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(child: _buildFeaturesColumn()),
+                          const SizedBox(width: 100),
+                          Expanded(child: _buildJourneyCard()),
+                        ],
+                      );
               },
             ),
           ),
           const SizedBox(height: 80),
-
         ],
       ),
     );
@@ -102,11 +97,23 @@ class AboutMeSection extends StatelessWidget {
   Widget _buildFeaturesColumn() {
     return Column(
       children: [
-        _featureItem(Icons.shield_rounded, 'Reliable & Secure', 'I build applications with security and reliability at their core, ensuring your data is protected.'),
+        _featureItem(
+          Icons.shield_rounded,
+          'Reliable & Secure',
+          'I build applications with security and reliability at their core, ensuring your data is protected.',
+        ),
         const SizedBox(height: 32),
-        _featureItem(Icons.lightbulb_rounded, 'Innovative Solutions', 'I leverage cutting-edge technologies to create innovative solutions for complex problems.'),
+        _featureItem(
+          Icons.lightbulb_rounded,
+          'Innovative Solutions',
+          'I leverage cutting-edge technologies to create innovative solutions for complex problems.',
+        ),
         const SizedBox(height: 32),
-        _featureItem(Icons.design_services_rounded, 'User-Focused Design', 'I prioritize user experience, creating intuitive interfaces that delight users.'),
+        _featureItem(
+          Icons.design_services_rounded,
+          'User-Focused Design',
+          'I prioritize user experience, creating intuitive interfaces that delight users.',
+        ),
       ],
     );
   }
@@ -124,7 +131,7 @@ class AboutMeSection extends StatelessWidget {
               gradient: const LinearGradient(
                 colors: [Color(0xFF3B82F6), Color(0xFF1E40AF)],
               ),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0xFF3B82F6).withOpacity(0.5),
@@ -182,8 +189,7 @@ class AboutMeSection extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            "With over 4 years of experience in web development, I’ve worked on projects ranging from small business websites to large-scale enterprise applications. This journey has strengthened my expertise in building modern, scalable, and user-focused solutions.\n\n"
-                "I’m passionate about continuous learning and always adapting to new technologies, ensuring I deliver innovative applications that exceed client expectations in both performance and design.",
+            "Passionate Flutter developer with 2.5+ years of experience building high-performance and scalable mobile applications. Skilled in GetX, BLoC, REST & GraphQL APIs, Firebase, CI/CD, and push notification systems (Firebase, Pushy, APNs). Experienced in full app lifecycle from UI design to publishing on Play Store and App Store.",
             style: GoogleFonts.poppins(
               color: Colors.white70,
               fontSize: 14,
