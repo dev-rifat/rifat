@@ -12,5 +12,6 @@ static String playstore="assets/images/playstore.jpg";
 static String playstore1="assets/images/playstore.png";
 static String appstore="assets/images/appstore.jpg";
 static String appstore1="assets/images/appstore1.png";
+static String me="assets/images/me.jpeg";
 
 }

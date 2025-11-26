@@ -101,7 +101,7 @@ class _PortfolioHomeState extends State<PortfolioHome> {
                 key: _headerKey,
                 child: HeaderSection(onMenuTap: scrollToSection),
               ),
-              Container(key: _heroKey, child: HeroSection()),
+              Container(key: _heroKey, child: HeroSection(onMenuTap: scrollToSection,)),
               Container(key: _aboutKey, child: AboutMeSection()),
               Container(key: _skillsKey, child: SkillsSection()),
               Container(key: _workKey, child: WorkExperienceSection()),

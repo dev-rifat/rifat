@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_protfolio/utils/images.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../global/utils/link_url_service.dart';
+
 class HeroSection extends StatefulWidget {
-  const HeroSection({super.key});
+  final Function(String) onMenuTap;
+
+  const HeroSection({super.key, required this.onMenuTap});
 
   @override
   State<HeroSection> createState() => _HeroSectionState();
@@ -186,14 +191,7 @@ class _HeroSectionState extends State<HeroSection>
               Colors.blueAccent,
               isMobile,
               click: () async {
-                final url = Uri.parse(
-                  "https://drive.google.com/file/d/17c5KrbqtvnFzaWQ9QTpxq8X0nGL54kib/view?usp=sharing",
-                );
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
+                widget.onMenuTap("Projects");
               },
             ),
 
@@ -204,16 +202,9 @@ class _HeroSectionState extends State<HeroSection>
               isMobile,
               border: true,
               click: () async {
-
-                print("asdfjjkasdhjfghjsahdjgd");
-                final url = Uri.parse(
+                await openCustomUrl(
                   "https://drive.google.com/file/d/17c5KrbqtvnFzaWQ9QTpxq8X0nGL54kib/view?usp=sharing",
                 );
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
               },
             ),
           ],
@@ -339,35 +330,11 @@ class _HeroSectionState extends State<HeroSection>
       ),
       child: Center(
         child: ClipOval(
-          child: Image.network(
-            "https://cdn.dribbble.com/userupload/11302619/file/original-2ecd4d83189d8c3ac7c8a481cb15c8b9.jpg?resize=800x800",
+          child: Image.asset(
+            AppImages.me,
             width: imageSize,
             height: imageSize,
             fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Container(
-                width: imageSize,
-                height: imageSize,
-                color: Colors.white10,
-                child: const CircularProgressIndicator(
-                  color: Colors.blueAccent,
-                  strokeWidth: 2,
-                ),
-              );
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                width: imageSize,
-                height: imageSize,
-                color: Colors.white10,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.blueAccent,
-                  size: imageSize * 0.3,
-                ),
-              );
-            },
           ),
         ),
       ),

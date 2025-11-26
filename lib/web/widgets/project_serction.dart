@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../global/utils/link_url_service.dart';
 import '../../global/widgets.dart';
-import '../../utils/api_endpoints.dart';
 import '../../utils/images.dart';
 
 class ProjectsSection extends StatelessWidget {
@@ -35,19 +35,19 @@ class ProjectsSection extends StatelessWidget {
           _buildProjectLayout(width),
           const SizedBox(height: 50),
           TextButton(
-
-            onPressed: (){}, child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("View all projects",style: TextStyle(color: Colors.blueAccent),),
-                SizedBox(width: 8,),
-                Icon(Icons.arrow_forward_outlined,color: Colors.blueAccent,)
+                Text(
+                  "View all projects",
+                  style: TextStyle(color: Colors.blueAccent),
+                ),
+                SizedBox(width: 8),
+                Icon(Icons.arrow_forward_outlined, color: Colors.blueAccent),
               ],
             ),
-
-
-          )
-
+          ),
         ],
       ),
     );
@@ -151,8 +151,8 @@ class ProjectsSection extends StatelessWidget {
     if (width >= 1024) return 0.98;
 
     // ---------- TABLETS LANDSCAPE (900px – 1023px) ----------
-    if (width >= 980)  return 0.98;  // iPad Pro 12.9" landscape
-    if (width >= 900)  return 0.98;
+    if (width >= 980) return 0.98; // iPad Pro 12.9" landscape
+    if (width >= 900) return 0.98;
 
     // ---------- TABLETS PORTRAIT / LARGE PHONES (700px – 899px) ----------
     if (width >= 820) return 0.98; // iPad Air 11" portrait
@@ -172,8 +172,6 @@ class ProjectsSection extends StatelessWidget {
     if (width >= 360) return 0.54; // older iPhones
     return 0.50; // smallest devices
   }
-
-
 
   Widget _buildGrid(int columns, double width) {
     return GridView.builder(
@@ -197,6 +195,10 @@ class ProjectsSection extends StatelessWidget {
   static final projects = [
     Project(
       title: "PayRun",
+      viewDetails: "https://payrun.app/",
+      appstoreUrl: "https://apps.apple.com/us/app/payrun/id6483939439",
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.gainhq.payrun&hl=en",
       description:
           "Complete HR & payroll management app with employee tracking, payroll automation and admin interface.",
       imageUrl: AppImages.payrun,
@@ -215,6 +217,11 @@ class ProjectsSection extends StatelessWidget {
     ),
     Project(
       title: "EasyDesk",
+      viewDetails: "https://easydesk.app/",
+      appstoreUrl:
+          "https://apps.apple.com/us/app/easydesk-support/id6738735433",
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.gainhq.easydesk&hl=en",
       description:
           "EasyDesk is more than just a helpdesk software. It is a complete online customer...",
       imageUrl: AppImages.easyDesk,
@@ -230,6 +237,11 @@ class ProjectsSection extends StatelessWidget {
     ),
     Project(
       title: "LMS Mobile",
+      viewDetails:           "https://play.google.com/store/apps/details?id=com.data_app_lms.lms_mobile_android_ios&hl=en",
+
+      playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.data_app_lms.lms_mobile_android_ios&hl=en",
+
       description:
           "Full-featured LMS for students with offline access, quizzes & video learning...",
       imageUrl: AppImages.rise,
@@ -238,18 +250,26 @@ class ProjectsSection extends StatelessWidget {
 
     Project(
       title: "Mango Cart",
+      viewDetails:
+          "https://play.google.com/store/apps/details?id=com.rifatalhasan.mango_app_user&hl=en", playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.rifatalhasan.mango_app_user&hl=en",
+
       description:
           "Mango lets you order fresh mangoes and premium beef from trusted local suppliers—fast, easy, and delivered to your door...",
       imageUrl: AppImages.mangoCart,
-      tags: ["Flutter", "REST API", "GetX", "SQLite","WebSocket"],
-    ),  Project(
+      tags: ["Flutter", "REST API", "GetX", "SQLite", "WebSocket"],
+    ),
+    Project(
       title: "Mango Cart Distributor",
+      viewDetails:
+          "https://play.google.com/store/apps/details?id=com.rifatalhasan.mango_app_admin&hl=en",playStoreUrl:
+          "https://play.google.com/store/apps/details?id=com.rifatalhasan.mango_app_admin&hl=en",
+
       description:
           "Seasonal mangoes and premium beef, delivered fast from trusted local suppliers...",
       imageUrl: AppImages.mangoCart,
-      tags: ["Flutter", "REST API", "GetX", "SQLite","WebSocket"],
+      tags: ["Flutter", "REST API", "GetX", "SQLite", "WebSocket"],
     ),
-
   ];
 }
 
@@ -260,11 +280,17 @@ class Project {
   final String title;
   final String description;
   final String imageUrl;
+  final String? viewDetails;
+  final String? appstoreUrl;
+  final String? playStoreUrl;
   final List<String> tags;
 
   const Project({
     required this.title,
     required this.description,
+    this.appstoreUrl,
+    this.playStoreUrl,
+    this.viewDetails,
     required this.imageUrl,
     required this.tags,
   });
@@ -392,36 +418,46 @@ class ProjectCard extends StatelessWidget {
 
                 SizedBox(height: 20),
 
-
-
                 SizedBox(
                   height: 30,
                   child: Row(
                     children: [
-                      Container(
-                        height: 30,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.blueAccent,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: Colors.black, width: 2),
-                          image: DecorationImage(
-                            image: AssetImage(AppImages.appstore),
-                            fit: BoxFit.cover,
+                      if (project.appstoreUrl != null)
+                        InkWell(
+                          onTap: () async {
+                            await openCustomUrl(project.appstoreUrl ?? "");
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: Colors.black, width: 2),
+                              image: DecorationImage(
+                                image: AssetImage(AppImages.appstore),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
                       SizedBox(width: 8),
-                      Container(
-                        height: 30,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.blueAccent,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: Colors.black, width: 2),
-                          image: DecorationImage(
-                            image: AssetImage(AppImages.playstore),
-                            fit: BoxFit.cover,
+
+                      InkWell(
+                        onTap: () async {
+                          await openCustomUrl(project.playStoreUrl ?? "");
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: Colors.black, width: 2),
+                            image: DecorationImage(
+                              image: AssetImage(AppImages.playstore),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -432,7 +468,10 @@ class ProjectCard extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: ()async {
+                    await openCustomUrl(project.viewDetails ?? "");
+
+                  },
 
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(color: Colors.blueAccent, width: 2),
