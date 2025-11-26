@@ -24,7 +24,7 @@ class HeaderSection extends StatelessWidget {
           Text(
             "Rifat",
             style: GoogleFonts.poppins(
-              color: Colors.white,
+              color: Colors.blueAccent,
               fontSize: isMobile ? 18 : 22,
               fontWeight: FontWeight.w600,
             ),

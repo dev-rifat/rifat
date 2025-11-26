@@ -427,7 +427,7 @@ class __SkillChipState extends State<_SkillChip>
                       widget.color.withValues(alpha: 0.4),
                     ],
                   ),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(3),
             boxShadow: [
               if (_isHovered)
                 BoxShadow(
