@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
+import '../../global/utils/link_url_service.dart';
 import '../../global/widgets.dart';
 
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
+
+  void showCopySnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Copied!", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black87,
+        duration: Duration(milliseconds: 700),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +29,11 @@ class ContactSection extends StatelessWidget {
       color: const Color(0xFF0D1117),
       padding: EdgeInsets.symmetric(
         vertical: isMobile ? 60 : 80,
-        horizontal: isMobile ? 24 : isTablet ? 60 : 120,
+        horizontal: isMobile
+            ? 24
+            : isTablet
+            ? 60
+            : 120,
       ),
       child: AnimationLimiter(
         child: Column(
@@ -33,20 +49,20 @@ class ContactSection extends StatelessWidget {
 
               isMobile
                   ? Column(
-                children: [
-                  _buildContactInfo(isMobile),
-                  const SizedBox(height: 30),
-                  _buildContactForm(isMobile),
-                ],
-              )
+                      children: [
+                        _buildContactInfo(isMobile, context),
+                        const SizedBox(height: 30),
+                        _buildContactForm(isMobile),
+                      ],
+                    )
                   : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: _buildContactInfo(isMobile)),
-                  const SizedBox(width: 40),
-                  Expanded(child: _buildContactForm(isMobile)),
-                ],
-              ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: _buildContactInfo(isMobile, context)),
+                        const SizedBox(width: 40),
+                        Expanded(child: _buildContactForm(isMobile)),
+                      ],
+                    ),
             ],
           ),
         ),
@@ -78,7 +94,7 @@ class ContactSection extends StatelessWidget {
     );
   }
 
-  Widget _buildContactInfo(bool isMobile) {
+  Widget _buildContactInfo(bool isMobile, BuildContext context) {
     return _AnimatedCard(
       child: Padding(
         padding: EdgeInsets.all(isMobile ? 18 : 28),
@@ -94,9 +110,26 @@ class ContactSection extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            _contactRow(Icons.email, "lutfurrh850@gmail.com"),
-            _contactRow(Icons.link, "linkedin.com/in/lutfar-rahman-rifat-1a769323a"),
-            _contactRow(Icons.code, "https://github.com/dev-rifat"),
+
+            _contactRow(Icons.email, "lutfurrh850@gmail.com", context, () {}),
+            _contactRow(
+              Icons.link,
+              "linkedin.com/in/lutfar-rahman-rifat-1a769323a",
+              context,
+              () {
+                openCustomUrl("https://www.linkedin.com/in/lutfar-rahman-rifat-1a769323a");
+              },
+            ),
+            _contactRow(
+              Icons.code,
+              "https://github.com/dev-rifat",
+              context,
+              () {
+
+                openCustomUrl("https://github.com/dev-rifat");
+
+              },
+            ),
           ],
         ),
       ),
@@ -123,6 +156,7 @@ class ContactSection extends StatelessWidget {
             _glowField("Email", Icons.email),
             _glowMessageField(),
             const SizedBox(height: 20),
+
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -131,11 +165,13 @@ class ContactSection extends StatelessWidget {
                   backgroundColor: const Color(0xFF1A73E8),
                   padding: const EdgeInsets.all(16),
                   elevation: 6,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                 ),
                 child: const Text(
                   "Send Message",
-                  style: TextStyle(fontSize: 14,color: Colors.white),
+                  style: TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ),
             ),
@@ -155,7 +191,10 @@ class ContactSection extends StatelessWidget {
           prefixIcon: Icon(icon, color: Colors.blue),
           filled: true,
           fillColor: const Color(0xFF1E293B),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4),
+            borderSide: BorderSide.none,
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4),
             borderSide: const BorderSide(color: Colors.white12),
@@ -177,9 +216,13 @@ class ContactSection extends StatelessWidget {
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: "Your message...",
+          hintStyle: TextStyle(color: Colors.white70),
           filled: true,
           fillColor: const Color(0xFF1E293B),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4),
+            borderSide: BorderSide.none,
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4),
             borderSide: const BorderSide(color: Color(0xFF3B82F6), width: 2),
@@ -189,28 +232,60 @@ class ContactSection extends StatelessWidget {
     );
   }
 
-  Widget _contactRow(IconData icon, String text) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: [Color(0xFF3B82F6), Color(0xFF1E40AF)]),
-              borderRadius: BorderRadius.circular(8),
+  Widget _contactRow(
+    IconData icon,
+    String text,
+    BuildContext context,
+    Function onAction,
+  ) {
+    return InkWell(
+      onTap: () => onAction(),
+
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                // gradient: const LinearGradient(
+                //   colors: [Color(0xFF3B82F6), Color(0xFF1E40AF)],
+                // ),
+                color: Colors.blueAccent,
+                borderRadius: BorderRadius.circular(3),
+              ),
+              child: Icon(icon, color: Colors.white, size: 20),
             ),
-            child: Icon(icon, color: Colors.white, size: 20),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(color: Colors.white70, fontSize: 15),
-              overflow: TextOverflow.ellipsis,
+
+            const SizedBox(width: 14),
+
+            Expanded(
+              child: Text(
+                text,
+                style: const TextStyle(color: Colors.white70, fontSize: 15),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-        ],
+
+            // Copy Button
+            IconButton(
+              icon: const Icon(Icons.copy, color: Colors.white70, size: 18),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: text));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    backgroundColor: Colors.black87,
+                    duration: Duration(milliseconds: 600),
+                    content: Text(
+                      "Copied!",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -231,7 +306,11 @@ class _AnimatedCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.white10),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 20, offset: const Offset(0, 10)),
+            BoxShadow(
+              color: Colors.black.withOpacity(0.4),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
           ],
         ),
         child: child,

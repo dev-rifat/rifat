@@ -270,20 +270,20 @@ class _SkillCategoryState extends State<SkillCategory>
           padding: const EdgeInsets.all(28),
           decoration: BoxDecoration(
            color: Color(0xff0e1628),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(3),
             boxShadow: [
               BoxShadow(
-                color: widget.color.withOpacity(_isHovered ? 0.4 : 0.2),
+                color: widget.color.withOpacity(_isHovered ? 0.4 : 0.0),
                 blurRadius: _isHovered ? 25 : 0,
-                spreadRadius: _isHovered ? 2 : 1,
+                spreadRadius: _isHovered ? 2 : 0,
                 offset: Offset(0, _isHovered ? 8 : 0),
               ),
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                spreadRadius: 1,
-                offset: const Offset(0, 4),
-              ),
+              // BoxShadow(
+              //   color: Colors.black.withOpacity(0.3),
+              //   blurRadius: 10,
+              //   spreadRadius: 1,
+              //   offset: const Offset(0, 4),
+              // ),
             ],
             border: Border.all(
               color: widget.color.withOpacity(_isHovered ? 0.3 : 0.1),
@@ -300,9 +300,10 @@ class _SkillCategoryState extends State<SkillCategory>
                     width: 4,
                     height: 24,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [widget.color, widget.color.withOpacity(0.7)],
-                      ),
+                      color: Colors.blueAccent,
+                      // gradient: LinearGradient(
+                      //   colors: [widget.color, widget.color.withOpacity(0.7)],
+                      // ),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -423,8 +424,10 @@ class __SkillChipState extends State<_SkillChip>
                   )
                 : LinearGradient(
                     colors: [
-                      widget.color.withValues(alpha: 0.2),
-                      widget.color.withValues(alpha: 0.4),
+                      widget.color.withValues(alpha: 0.1),
+                      widget.color.withValues(alpha: 0.1),
+                      widget.color.withValues(alpha: 0.1),
+                      widget.color.withValues(alpha: 0.1),
                     ],
                   ),
             borderRadius: BorderRadius.circular(3),

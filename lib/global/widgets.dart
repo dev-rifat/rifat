@@ -19,21 +19,21 @@ class CustomButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(50),
-          border: Border.all(color: Colors.blueAccent, width: 1),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF3B82F6).withValues(alpha: 0.4),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
+          color: Colors.blueAccent,
+          borderRadius: BorderRadius.circular(3),
+          // border: Border.all(color: Colors.blueAccent, width: 1),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: const Color(0xFF3B82F6).withValues(alpha: 0.4),
+          //     blurRadius: 20,
+          //     offset: const Offset(0, 8),
+          //   ),
+          // ],
         ),
         child: Text(
           text,
           style: GoogleFonts.poppins(
-            color: Colors.white,
+            color: Color(0xFF020227),
             fontWeight: FontWeight.w600,
             fontSize: 15,
           ),
